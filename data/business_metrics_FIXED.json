@@ -1,0 +1,35 @@
+{
+  "tier_summary": [
+    {
+      "tier": "Low Risk",
+      "count": 19725,
+      "percentage": 32.07160626310912,
+      "default_rate": 0.022103929024081117,
+      "avg_prob": 0.19214820861816406
+    },
+    {
+      "tier": "Medium Risk",
+      "count": 26621,
+      "percentage": 43.28406744386453,
+      "default_rate": 0.06626347620299763,
+      "avg_prob": 0.44121888279914856
+    },
+    {
+      "tier": "High Risk",
+      "count": 15157,
+      "percentage": 24.644326293026356,
+      "default_rate": 0.18242396252556575,
+      "avg_prob": 0.7248369455337524
+    }
+  ],
+  "tier_thresholds": {
+    "low_to_medium": 0.3,
+    "medium_to_high": 0.6
+  },
+  "recommended_threshold": 0.49,
+  "approval_rate": 0.613905012763605,
+  "default_recall": 0.718429003021148,
+  "npa_reduction_pct": 71.8429003021148,
+  "baseline_default_rate": 0.08072776937710356,
+  "model_default_rate": 0.03702624678867495
+}

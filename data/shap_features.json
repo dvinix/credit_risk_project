@@ -1,0 +1,16 @@
+{
+  "top_5_features": [
+    "ext_source_mean",
+    "AMT_REQ_CREDIT_BUREAU_YEAR",
+    "AMT_GOODS_PRICE",
+    "annuity_to_credit",
+    "ext_source_min"
+  ],
+  "top_5_importance": [
+    0.37465617060661316,
+    0.33338239789009094,
+    0.2130427062511444,
+    0.1997988373041153,
+    0.1927594095468521
+  ]
+}
