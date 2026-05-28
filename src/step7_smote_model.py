@@ -9,13 +9,13 @@ from sklearn.metrics import roc_auc_score, classification_report
 import json
 
 # Load train/test data
-X_train = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_train.csv')
-X_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_test.csv')
-y_train = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_train.csv')['TARGET']
-y_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_test.csv')['TARGET']
+X_train = pd.read_csv('data/X_train.csv')
+X_test = pd.read_csv('data/X_test.csv')
+y_train = pd.read_csv('data/y_train.csv')['TARGET']
+y_test = pd.read_csv('data/y_test.csv')['TARGET']
 
 # Load previous metrics
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\xgb_metrics.json', 'r') as f:
+with open('data/xgb_metrics.json', 'r') as f:
     prev_metrics = json.load(f)
 scale_pos_weight = prev_metrics['scale_pos_weight']
 
@@ -77,7 +77,7 @@ print("\n✅ STEP 7 COMPLETE\n")
 
 # Save SMOTE model and metrics
 import pickle
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\models\xgb_smote_model.pkl', 'wb') as f:
+with open('models/xgb_smote_model.pkl', 'wb') as f:
     pickle.dump(xgb_smote, f)
 
 smote_metrics = {
@@ -85,7 +85,7 @@ smote_metrics = {
     'recall_before': recall_before,
     'recall_after': recall_after
 }
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\smote_metrics.json', 'w') as f:
+with open('data/smote_metrics.json', 'w') as f:
     json.dump(smote_metrics, f, indent=2)
 
 print("💾 Saved SMOTE model and metrics")

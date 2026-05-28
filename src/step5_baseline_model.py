@@ -9,10 +9,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import roc_auc_score, classification_report
 
 # Load train/test data
-X_train = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_train.csv')
-X_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_test.csv')
-y_train = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_train.csv')['TARGET']
-y_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_test.csv')['TARGET']
+X_train = pd.read_csv('data/X_train.csv')
+X_test = pd.read_csv('data/X_test.csv')
+y_train = pd.read_csv('data/y_train.csv')['TARGET']
+y_test = pd.read_csv('data/y_test.csv')['TARGET']
 
 print("=" * 60)
 print("STEP 5 — BASELINE MODEL (Logistic Regression)")
@@ -46,6 +46,6 @@ baseline_metrics = {
     'roc_auc': roc_auc
 }
 import json
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\baseline_metrics.json', 'w') as f:
+with open('data/baseline_metrics.json', 'w') as f:
     json.dump(baseline_metrics, f, indent=2)
 print("💾 Saved baseline metrics")

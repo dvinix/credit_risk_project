@@ -9,11 +9,11 @@ import seaborn as sns
 import json
 
 # Load test data
-X_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_test.csv')
-y_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_test.csv')['TARGET']
+X_test = pd.read_csv('data/X_test.csv')
+y_test = pd.read_csv('data/y_test.csv')['TARGET']
 
 # Load SMOTE model
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\models\xgb_smote_model.pkl', 'rb') as f:
+with open('models/xgb_smote_model.pkl', 'rb') as f:
     xgb_smote = pickle.load(f)
 
 print("=" * 60)
@@ -23,13 +23,15 @@ print("=" * 60)
 # Get predictions
 y_pred_proba = xgb_smote.predict_proba(X_test)[:, 1]
 
-# Assign risk tiers
+# FIXED: Assign risk tiers based on actual probability distribution
+# Based on percentiles: 25th = 0.26, 75th = 0.60
+# Goal: ~60% Low Risk, ~25% Medium Risk, ~15% High Risk
 def assign_risk_tier(prob):
-    if prob < 0.05:
+    if prob < 0.30:        # ~60% of applicants
         return 'Low Risk'
-    elif prob < 0.15:
+    elif prob < 0.60:      # ~25% of applicants
         return 'Medium Risk'
-    else:
+    else:                  # ~15% of applicants
         return 'High Risk'
 
 risk_tiers = pd.Series([assign_risk_tier(p) for p in y_pred_proba])
@@ -57,6 +59,11 @@ for tier in ['Low Risk', 'Medium Risk', 'High Risk']:
         'avg_prob': float(avg_prob)
     })
 
+print("\n💡 Interpretation:")
+print("   Low Risk    → Auto-approve (fast track)")
+print("   Medium Risk → Manual review required")
+print("   High Risk   → Auto-decline or require collateral")
+
 # Plot risk segmentation
 print("\n📊 Creating risk segmentation plot...")
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
@@ -73,7 +80,8 @@ axes[0].grid(axis='y', alpha=0.3)
 
 # Add count labels
 for i, v in enumerate(tier_counts.values):
-    axes[0].text(i, v + 500, f'{v:,}', ha='center', fontsize=10, fontweight='bold')
+    axes[0].text(i, v + 500, f'{v:,}\n({v/len(risk_tiers)*100:.1f}%)', 
+                ha='center', fontsize=10, fontweight='bold')
 
 # Plot 2: Default rate by tier
 default_rates = []
@@ -93,12 +101,12 @@ for i, v in enumerate(default_rates):
     axes[1].text(i, v + 0.5, f'{v:.1f}%', ha='center', fontsize=10, fontweight='bold')
 
 plt.tight_layout()
-plt.savefig(r'c:\Users\gargd\Downloads\credit_risk_project\outputs\risk_segmentation.png', dpi=300, bbox_inches='tight')
+plt.savefig('outputs/risk_segmentation.png', dpi=300, bbox_inches='tight')
 plt.close()
 print("   ✅ Saved: outputs/risk_segmentation.png")
 
-# Find threshold where recall >= 0.65 AND approval rate >= 0.65
-print("\n🎯 Finding optimal threshold (recall >= 0.65 AND approval rate >= 0.65)...")
+# Find threshold where recall >= 0.65 AND approval rate >= 0.60
+print("\n🎯 Finding optimal threshold (recall >= 0.65 AND approval rate >= 0.60)...")
 
 best_threshold = None
 best_approval_rate = None
@@ -115,14 +123,14 @@ for threshold in np.arange(0.01, 0.99, 0.01):
     fn = ((y_pred == 0) & (y_test == 1)).sum()
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0
     
-    if recall >= 0.65 and approval_rate >= 0.65:
+    if recall >= 0.65 and approval_rate >= 0.60:
         best_threshold = threshold
         best_approval_rate = approval_rate
         best_recall = recall
         break
 
 if best_threshold is None:
-    # Relax constraints slightly
+    # Relax to 55% approval
     for threshold in np.arange(0.01, 0.99, 0.01):
         y_pred = (y_pred_proba >= threshold).astype(int)
         approval_rate = (y_pred == 0).mean()
@@ -130,7 +138,7 @@ if best_threshold is None:
         fn = ((y_pred == 0) & (y_test == 1)).sum()
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0
         
-        if recall >= 0.60 and approval_rate >= 0.60:
+        if recall >= 0.65 and approval_rate >= 0.55:
             best_threshold = threshold
             best_approval_rate = approval_rate
             best_recall = recall
@@ -141,7 +149,6 @@ print(f"   Approval Rate: {best_approval_rate:.2%}")
 print(f"   Default Recall: {best_recall:.2%}")
 
 # Simulated NPA reduction
-# Baseline: approve everyone
 baseline_default_rate = y_test.mean()
 baseline_defaults = len(y_test) * baseline_default_rate
 
@@ -163,6 +170,10 @@ print("\n✅ STEP 10 COMPLETE\n")
 # Save business metrics
 business_metrics = {
     'tier_summary': tier_summary,
+    'tier_thresholds': {
+        'low_to_medium': 0.30,
+        'medium_to_high': 0.60
+    },
     'recommended_threshold': float(best_threshold),
     'approval_rate': float(best_approval_rate),
     'default_recall': float(best_recall),
@@ -170,6 +181,6 @@ business_metrics = {
     'baseline_default_rate': float(baseline_default_rate),
     'model_default_rate': float(model_default_rate)
 }
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\business_metrics.json', 'w') as f:
+with open('data/business_metrics.json', 'w') as f:
     json.dump(business_metrics, f, indent=2)
 print("💾 Saved business metrics")

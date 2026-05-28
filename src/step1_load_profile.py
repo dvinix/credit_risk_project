@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 # Load the dataset
-df = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\application_train.csv')
+df = pd.read_csv('data/application_train.csv')
 
 print("=" * 60)
 print("STEP 1 — LOAD & BASIC PROFILE")

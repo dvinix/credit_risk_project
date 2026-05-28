@@ -12,33 +12,33 @@ print("STEP 11 — SAVE EVERYTHING")
 print("=" * 60)
 
 # Load all metrics
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\baseline_metrics.json', 'r') as f:
+with open('data/baseline_metrics.json', 'r') as f:
     baseline_metrics = json.load(f)
 
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\xgb_metrics.json', 'r') as f:
+with open('data/xgb_metrics.json', 'r') as f:
     xgb_metrics = json.load(f)
 
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\smote_metrics.json', 'r') as f:
+with open('data/smote_metrics.json', 'r') as f:
     smote_metrics = json.load(f)
 
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\threshold_metrics.json', 'r') as f:
+with open('data/threshold_metrics.json', 'r') as f:
     threshold_metrics = json.load(f)
 
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\shap_features.json', 'r') as f:
+with open('data/shap_features.json', 'r') as f:
     shap_features = json.load(f)
 
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\business_metrics.json', 'r') as f:
+with open('data/business_metrics.json', 'r') as f:
     business_metrics = json.load(f)
 
 # Load final model
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\models\xgb_smote_model.pkl', 'rb') as f:
+with open('models/xgb_smote_model.pkl', 'rb') as f:
     final_model = pickle.load(f)
 
 # Copy final model
 print("\n💾 Saving final model...")
 shutil.copy(
-    r'c:\Users\gargd\Downloads\credit_risk_project\models\xgb_smote_model.pkl',
-    r'c:\Users\gargd\Downloads\credit_risk_project\models\xgb_final.pkl'
+    'models/xgb_smote_model.pkl',
+    'models/xgb_final.pkl'
 )
 print("   ✅ Saved: models/xgb_final.pkl")
 
@@ -63,7 +63,7 @@ final_metrics = {
 }
 
 # Save final metrics
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\models\metrics.json', 'w') as f:
+with open('models/metrics.json', 'w') as f:
     json.dump(final_metrics, f, indent=2)
 print("   ✅ Saved: models/metrics.json")
 

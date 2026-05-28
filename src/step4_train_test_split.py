@@ -6,8 +6,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 # Load engineered data
-X = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_engineered.csv')
-y = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_clean.csv')['TARGET']
+X = pd.read_csv('data/X_engineered.csv')
+y = pd.read_csv('data/y_clean.csv')['TARGET']
 
 print("=" * 60)
 print("STEP 4 — TRAIN / TEST SPLIT")
@@ -30,8 +30,8 @@ print(f"   Default (1):     {train_counts[1]:,} ({train_counts[1]/len(y_train)*1
 print("\n✅ STEP 4 COMPLETE\n")
 
 # Save splits
-X_train.to_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_train.csv', index=False)
-X_test.to_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_test.csv', index=False)
-y_train.to_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_train.csv', index=False)
-y_test.to_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_test.csv', index=False)
+X_train.to_csv('data/X_train.csv', index=False)
+X_test.to_csv('data/X_test.csv', index=False)
+y_train.to_csv('data/y_train.csv', index=False)
+y_test.to_csv('data/y_test.csv', index=False)
 print("💾 Saved train/test splits to data/ folder")

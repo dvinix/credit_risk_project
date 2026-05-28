@@ -4,7 +4,7 @@ FINAL PRINT — PROJECT SUMMARY
 import json
 
 # Load final metrics
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\models\metrics.json', 'r') as f:
+with open('models/metrics.json', 'r') as f:
     metrics = json.load(f)
 
 print("=" * 60)

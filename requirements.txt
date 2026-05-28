@@ -7,4 +7,6 @@ imbalanced-learn
 matplotlib 
 seaborn 
 scipy
+fastapi
+uvicorn
 #python run_pipeline.py

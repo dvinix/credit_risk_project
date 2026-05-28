@@ -6,11 +6,11 @@ import numpy as np
 import pickle
 
 # Load test data
-X_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_test.csv')
-y_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_test.csv')['TARGET']
+X_test = pd.read_csv('data/X_test.csv')
+y_test = pd.read_csv('data/y_test.csv')['TARGET']
 
 # Load SMOTE model
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\models\xgb_smote_model.pkl', 'rb') as f:
+with open('models/xgb_smote_model.pkl', 'rb') as f:
     xgb_smote = pickle.load(f)
 
 # Get predictions

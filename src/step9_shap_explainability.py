@@ -9,11 +9,11 @@ import matplotlib.pyplot as plt
 import json
 
 # Load test data
-X_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_test.csv')
-y_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_test.csv')['TARGET']
+X_test = pd.read_csv('data/X_test.csv')
+y_test = pd.read_csv('data/y_test.csv')['TARGET']
 
 # Load SMOTE model
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\models\xgb_smote_model.pkl', 'rb') as f:
+with open('models/xgb_smote_model.pkl', 'rb') as f:
     xgb_smote = pickle.load(f)
 
 print("=" * 60)
@@ -37,7 +37,7 @@ print("\n📊 Creating beeswarm plot (top 15 features)...")
 plt.figure(figsize=(10, 8))
 shap.summary_plot(shap_values, X_sample, max_display=15, show=False)
 plt.tight_layout()
-plt.savefig(r'c:\Users\gargd\Downloads\credit_risk_project\outputs\shap_beeswarm.png', dpi=300, bbox_inches='tight')
+plt.savefig('outputs/shap_beeswarm.png', dpi=300, bbox_inches='tight')
 plt.close()
 print("   ✅ Saved: outputs/shap_beeswarm.png")
 
@@ -56,7 +56,7 @@ shap.waterfall_plot(shap.Explanation(
     feature_names=X_sample.columns.tolist()
 ), show=False)
 plt.tight_layout()
-plt.savefig(r'c:\Users\gargd\Downloads\credit_risk_project\outputs\shap_waterfall.png', dpi=300, bbox_inches='tight')
+plt.savefig('outputs/shap_waterfall.png', dpi=300, bbox_inches='tight')
 plt.close()
 print("   ✅ Saved: outputs/shap_waterfall.png")
 
@@ -77,7 +77,7 @@ plt.ylabel('Feature', fontsize=12)
 plt.title('Top 15 Features by SHAP Importance', fontsize=14, fontweight='bold')
 plt.gca().invert_yaxis()
 plt.tight_layout()
-plt.savefig(r'c:\Users\gargd\Downloads\credit_risk_project\outputs\shap_feature_importance.png', dpi=300, bbox_inches='tight')
+plt.savefig('outputs/shap_feature_importance.png', dpi=300, bbox_inches='tight')
 plt.close()
 print("   ✅ Saved: outputs/shap_feature_importance.png")
 
@@ -119,6 +119,6 @@ top_features = {
     'top_5_features': top_5['feature'].tolist(),
     'top_5_importance': top_5['importance'].tolist()
 }
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\shap_features.json', 'w') as f:
+with open('data/shap_features.json', 'w') as f:
     json.dump(top_features, f, indent=2)
 print("💾 Saved SHAP feature importance")

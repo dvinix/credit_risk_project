@@ -6,7 +6,7 @@ import numpy as np
 import os
 
 # Load the dataset
-df = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\application_train.csv')
+df = pd.read_csv('data/application_train.csv')
 
 print("=" * 60)
 print("STEP 2 — CLEAN & PREPARE")
@@ -53,6 +53,6 @@ print(f"   Samples: {X.shape[0]:,}")
 print("\n✅ STEP 2 COMPLETE\n")
 
 # Save for next steps
-X.to_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_clean.csv', index=False)
-y.to_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_clean.csv', index=False)
+X.to_csv('data/X_clean.csv', index=False)
+y.to_csv('data/y_clean.csv', index=False)
 print("💾 Saved X_clean.csv and y_clean.csv to data/ folder")

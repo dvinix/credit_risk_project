@@ -8,10 +8,10 @@ from sklearn.metrics import roc_auc_score, classification_report
 import json
 
 # Load train/test data
-X_train = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_train.csv')
-X_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_test.csv')
-y_train = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_train.csv')['TARGET']
-y_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_test.csv')['TARGET']
+X_train = pd.read_csv('data/X_train.csv')
+X_test = pd.read_csv('data/X_test.csv')
+y_train = pd.read_csv('data/y_train.csv')['TARGET']
+y_test = pd.read_csv('data/y_test.csv')['TARGET']
 
 print("=" * 60)
 print("STEP 6 — MAIN MODEL (XGBoost)")
@@ -59,14 +59,14 @@ print("\n✅ STEP 6 COMPLETE\n")
 
 # Save model and metrics
 import pickle
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\models\xgb_model.pkl', 'wb') as f:
+with open('models/xgb_model.pkl', 'wb') as f:
     pickle.dump(xgb_model, f)
 
 xgb_metrics = {
     'roc_auc': roc_auc,
     'scale_pos_weight': scale_pos_weight
 }
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\xgb_metrics.json', 'w') as f:
+with open('data/xgb_metrics.json', 'w') as f:
     json.dump(xgb_metrics, f, indent=2)
 
 print("💾 Saved XGBoost model and metrics")

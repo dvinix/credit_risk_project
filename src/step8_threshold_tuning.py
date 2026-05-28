@@ -9,11 +9,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load test data
-X_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\X_test.csv')
-y_test = pd.read_csv(r'c:\Users\gargd\Downloads\credit_risk_project\data\y_test.csv')['TARGET']
+X_test = pd.read_csv('data/X_test.csv')
+y_test = pd.read_csv('data/y_test.csv')['TARGET']
 
 # Load SMOTE model
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\models\xgb_smote_model.pkl', 'rb') as f:
+with open('models/xgb_smote_model.pkl', 'rb') as f:
     xgb_smote = pickle.load(f)
 
 print("=" * 60)
@@ -36,7 +36,7 @@ plt.title('Precision-Recall Curve', fontsize=14, fontweight='bold')
 plt.grid(True, alpha=0.3)
 plt.legend(fontsize=10)
 plt.tight_layout()
-plt.savefig(r'c:\Users\gargd\Downloads\credit_risk_project\outputs\precision_recall_curve.png', dpi=300, bbox_inches='tight')
+plt.savefig('outputs/precision_recall_curve.png', dpi=300, bbox_inches='tight')
 plt.close()
 print("   ✅ Saved: outputs/precision_recall_curve.png")
 
@@ -90,7 +90,7 @@ plt.xlabel('Predicted', fontsize=12)
 plt.ylabel('Actual', fontsize=12)
 plt.title(f'Confusion Matrix (Threshold={best_threshold:.4f})', fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig(r'c:\Users\gargd\Downloads\credit_risk_project\outputs\confusion_matrix.png', dpi=300, bbox_inches='tight')
+plt.savefig('outputs/confusion_matrix.png', dpi=300, bbox_inches='tight')
 plt.close()
 print("\n   ✅ Saved: outputs/confusion_matrix.png")
 
@@ -103,6 +103,6 @@ threshold_metrics = {
     'recall_at_threshold': best_recall,
     'precision_at_threshold': best_precision
 }
-with open(r'c:\Users\gargd\Downloads\credit_risk_project\data\threshold_metrics.json', 'w') as f:
+with open('data/threshold_metrics.json', 'w') as f:
     json.dump(threshold_metrics, f, indent=2)
 print("💾 Saved threshold metrics")
